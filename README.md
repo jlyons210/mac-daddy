@@ -21,6 +21,11 @@ $ ./mac-daddy.sh 00-11-22-33-44-55
 $ ./mac-daddy.sh 00-11-22-33-44-55 44-55-66-77-88-99
 00-11-22-33-44-55       CIMSYS Inc
 44-55-66-77-88-99       (Unknown Vendor)
+
+$ ./mac-daddy.sh $my_macs
+7C-2E-BD-00-00-00       Google, Inc.
+40-8D-5C-00-00-00       GIGA-BYTE TECHNOLOGY CO.,LTD.
+A4-30-7A-00-00-00       Samsung Electronics Co.,Ltd
 ```
 
 ## TODO:
