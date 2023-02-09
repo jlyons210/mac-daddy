@@ -36,10 +36,10 @@ for mac in $@; do
 		backoff=$(echo "$backoff * 2" | bc)
 		vendor=$(curl -s "https://api.macvendors.com/$mac")
 
-		## Handle 'vendor not found' errors - some devices use randomized MACs
-		if [[ "$vendor" == *"Not Found"* ]]; then vendor="(Unknown Vendor)"; fi
-
 	done
+
+	## Handle 'vendor not found' errors - some devices use randomized MACs
+	if [[ "$vendor" == *"Not Found"* ]]; then vendor="(Unknown Vendor)"; fi
 
 	## Display output
 	echo -e "$mac\t$vendor"
