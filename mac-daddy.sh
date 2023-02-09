@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+## Check dependencies
+if ! ./util-check-dependency.sh curl bc; then exit 1; fi
+
 ## Validate input
 if [[ $# -eq 0 ]]; then
 
@@ -19,20 +22,26 @@ fi
 ## Lookup MAC addresses
 for mac in $@; do
 
+	## Set initial backoff/retry timeout
 	backoff=0.01
 
+	## Poll API
 	vendor=$(curl -s "https://api.macvendors.com/$mac")
 
+	## Handle throttling
 	while [[ "$vendor" == *"Too Many Requests"* ]]; do
 
 		#>&2 echo "Throttled, waiting $backoff seconds..."
 		sleep $backoff
 		backoff=$(echo "$backoff * 2" | bc)
 		vendor=$(curl -s "https://api.macvendors.com/$mac")
+
+		## Handle 'vendor not found' errors - some devices use randomized MACs
 		if [[ "$vendor" == *"Not Found"* ]]; then vendor="(Unknown Vendor)"; fi
 
 	done
 
+	## Display output
 	echo -e "$mac\t$vendor"
 
 done
